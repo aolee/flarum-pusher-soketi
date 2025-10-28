@@ -1,75 +1,82 @@
 {
-    "name": "flarum/pusher",
-    "description": "See new discussions and posts in real-time using Pusher.",
-    "type": "flarum-extension",
-    "keywords": [
-        "discussion"
-    ],
-    "license": "MIT",
-    "support": {
-        "issues": "https://github.com/flarum/framework/issues",
-        "source": "https://github.com/flarum/pusher",
-        "forum": "https://discuss.flarum.org"
+  "name": "aolee/flarum-pusher-soketi",
+  "description": "Flarum Pusher extension, Soketi-ready (custom host/port/TLS via config.php).",
+  "type": "flarum-extension",
+  "keywords": [
+    "discussion",
+    "realtime",
+    "pusher",
+    "soketi",
+    "websocket"
+  ],
+  "license": "MIT",
+  "support": {
+    "issues": "https://github.com/aolee/flarum-pusher-soketi/issues",
+    "source": "https://github.com/aolee/flarum-pusher-soketi",
+    "forum": "https://discuss.flarum.org"
+  },
+  "homepage": "https://flarum.org",
+  "funding": [
+    {
+      "type": "website",
+      "url": "https://flarum.org/donate/"
+    }
+  ],
+  "require": {
+    "flarum/core": "^2.0.0-beta.3",
+    "pusher/pusher-php-server": "^7.2"
+  },
+  "require-dev": {
+    "flarum/tags": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Flarum\\Pusher\\": "src/"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-main": "2.x-dev"
     },
-    "homepage": "https://flarum.org",
-    "funding": [
-        {
-            "type": "website",
-            "url": "https://flarum.org/donate/"
-        }
-    ],
-    "require": {
-        "flarum/core": "^2.0.0-beta.3",
-        "pusher/pusher-php-server": "^7.2"
+    "flarum-extension": {
+      "title": "Pusher (Soketi Ready)",
+      "category": "feature",
+      "icon": {
+        "image": "icon.png",
+        "backgroundSize": "46% 63%",
+        "backgroundPosition": "center",
+        "backgroundRepeat": "no-repeat",
+        "backgroundColor": "#40bad8",
+        "color": "#fff"
+      }
     },
-    "require-dev": {
-        "flarum/tags": "^1.0"
-    },
-    "autoload": {
-        "psr-4": {
-            "Flarum\\Pusher\\": "src/"
-        }
-    },
-    "extra": {
-        "branch-alias": {
-            "dev-main": "2.x-dev"
-        },
-        "flarum-extension": {
-            "title": "Pusher",
-            "category": "feature",
-            "icon": {
-                "image": "icon.png",
-                "backgroundSize": "46% 63%",
-                "backgroundPosition": "center",
-                "backgroundRepeat": "no-repeat",
-                "backgroundColor": "#40bad8",
-                "color": "#fff"
-            }
-        },
-        "flarum-cli": {
-            "modules": {
-                "admin": true,
-                "forum": true,
-                "js": true,
-                "jsCommon": false,
-                "css": true,
-                "gitConf": true,
-                "githubActions": true,
-                "prettier": true,
-                "typescript": true,
-                "bundlewatch": false,
-                "backendTesting": false,
-                "editorConfig": true,
-                "styleci": true
-            }
-        }
-    },
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../../*/*"
-        }
-    ],
-    "minimum-stability": "dev",
-    "prefer-stable": true
+    "flarum-cli": {
+      "modules": {
+        "admin": true,
+        "forum": true,
+        "js": true,
+        "jsCommon": false,
+        "css": true,
+        "gitConf": true,
+        "githubActions": true,
+        "prettier": true,
+        "typescript": true,
+        "bundlewatch": false,
+        "backendTesting": false,
+        "editorConfig": true,
+        "styleci": true
+      }
+    }
+  },
+  "conflict": {
+    "flarum/pusher": "*"
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "../../*/*"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true
 }
