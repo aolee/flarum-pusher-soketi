@@ -19,19 +19,40 @@ export type PusherBinding = {
 
 app.initializers.add('flarum-pusher', () => {
   app.pusher = (async () => {
-    // @ts-expect-error
+    // @ts-expect-error dynamic import
     await import('//cdn.jsdelivr.net/npm/pusher-js@7.0.3/dist/web/pusher.min.js' /* webpackIgnore: true, webpackPrefetch: true */);
 
-    // @ts-expect-error Imported dynamically
-    const socket: PusherTypes.default = new Pusher(app.forum.attribute('pusherKey'), {
+    const options: any = {
       authEndpoint: `${app.forum.attribute('apiUrl')}/pusher/auth`,
-      cluster: app.forum.attribute('pusherCluster'),
+      cluster: app.forum.attribute('pusherCluster') || undefined,
       auth: {
         headers: {
           'X-CSRF-Token': app.session.csrfToken,
         },
       },
-    });
+    };
+
+    /**
+     * ✅ Soketi Overrides
+     * Values come from extend.php → ForumSerializer → frontend attributes.
+     */
+    const soketiHost = app.forum.attribute('soketi.host') as string | null;
+    const soketiPortAttr = app.forum.attribute('soketi.port');
+    const soketiTLS = !!app.forum.attribute('soketi.tls');
+    const soketiPort = Number(soketiPortAttr) || (soketiTLS ? 443 : 6001);
+
+    if (soketiHost) {
+      options.wsHost = soketiHost;
+      options.wsPort = soketiPort;
+      options.wssPort = 443;
+      options.forceTLS = soketiTLS;
+      options.enabledTransports = ['ws', 'wss'];
+      delete options.cluster; // disable cluster routing
+    }
+
+    // ✅ Final Pusher / Soketi instance
+    // @ts-expect-error after dynamic import
+    const socket: PusherTypes.default = new Pusher(app.forum.attribute('pusherKey'), options);
 
     return {
       channels: {
