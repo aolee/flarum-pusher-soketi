@@ -39,4 +39,20 @@ return [
 
     (new Extend\ServiceProvider())
         ->register(PusherProvider::class),
+    
+    (new Extend\ServiceProvider())
+        ->register(function ($app) {
+            $app->bind(SoketiConfig::class, fn () => new SoketiConfig($app->make(Config::class)));
+        }),
+
+    (new Extend\ApiSerializer(ForumSerializer::class))
+        ->attributes(function (ForumSerializer $serializer) {
+            $config = resolve(Config::class);
+
+            return [
+                'soketi.host' => $config['soketi.host'] ?? null,
+                'soketi.port' => $config['soketi.port'] ?? null,
+                'soketi.tls'  => (bool)($config['soketi.tls'] ?? true),
+            ];
+        }),
 ];
